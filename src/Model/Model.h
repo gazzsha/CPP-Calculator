@@ -224,8 +224,7 @@ class Model: public Validator {
 };
 
 Model::~Model() { 
-  size_t size = sizeof(arrayOfMonthlyPayment)/sizeof(arrayOfMonthlyPayment[0]);
- AllocTraits::deallocate(alloc,arrayOfMonthlyPayment,size);
+ AllocTraits::deallocate(alloc,arrayOfMonthlyPayment,get_data_month());
 }
 
 const double Model::get_data() const noexcept { 
