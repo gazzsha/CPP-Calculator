@@ -11,21 +11,17 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-extern "C" {
-#include "s21_SmartCalc.h"
-}
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(s21::Controller * controller_, QWidget *parent = nullptr);
     ~MainWindow();
-
 private:
-    Ui::MainWindow *ui;
+    s21::Controller * controller;
     Graph_Windows * win_graph;
+    Ui::MainWindow *ui;
 private slots:
     void digit_buttom_numbers();
     void buttom_equal();
@@ -37,8 +33,7 @@ private slots:
     void set_dot();
     void on_action_2_triggered();
     void on_action_3_triggered();
-    void get_sum_of_month();
-
+ //   void get_sum_of_month();
     void on_pushButton_graph_clicked();
 };
 #endif // MAINWINDOW_H

@@ -4,20 +4,18 @@
 #include <QDialog>
 #include <QVector>
 #include "qcustomplot.h"
+#include "../Controller/Controller.h"
 namespace Ui {
 class Graph_Windows;
 }
 
-extern "C" {
-#include "s21_SmartCalc.h"
-}
 
 class Graph_Windows : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Graph_Windows(QWidget *parent = nullptr);
+    explicit Graph_Windows(s21::Controller * controller_, QWidget *parent = nullptr);
     ~Graph_Windows();
     double xBegin,xEnd,h,X;
      QVector<double> x,y;
@@ -28,6 +26,7 @@ public:
 
 private:
     Ui::Graph_Windows *ui;
+    s21::Controller * controller;
     void print();
       void change_data();
 
