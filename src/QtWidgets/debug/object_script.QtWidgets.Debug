@@ -1,0 +1,10 @@
+debug/s21_SmartCalc.o
+debug/s21_parser.o
+debug/s21_stack.o
+debug/graph_windows.o
+debug/main.o
+debug/mainwindow.o
+debug/qcustomplot.o
+debug/moc_graph_windows.o
+debug/moc_mainwindow.o
+debug/moc_qcustomplot.o

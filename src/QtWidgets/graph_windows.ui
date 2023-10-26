@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Graph_Windows</class>
+ <widget class="QDialog" name="Graph_Windows">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>817</width>
+    <height>532</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QCustomPlot" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>90</y>
+     <width>801</width>
+     <height>441</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>241</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 700 italic 14pt &quot;Candara&quot;;
+background-color: grey;
+border-radius: 15px;
+color: white
+</string>
+   </property>
+   <property name="text">
+    <string>Нарисовать</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_expression">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>10</y>
+     <width>551</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 14pt &quot;Segoe UI Variable Small Semibol&quot;;
+background-color: rgb(112, 105, 127);
+border-radius: 20px;
+color: white</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>50</y>
+     <width>551</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLineEdit" name="lineEdit_Y_min">
+      <property name="styleSheet">
+       <string notr="true">font: 600 14pt &quot;Segoe UI Variable Small Semibol&quot;;
+background-color: rgb(112, 105, 127);
+border-radius: 20px;
+color: white
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_Y_max">
+      <property name="styleSheet">
+       <string notr="true">font: 600 14pt &quot;Segoe UI Variable Small Semibol&quot;;
+background-color: rgb(112, 105, 127);
+border-radius: 20px;
+color: white
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_X_min">
+      <property name="styleSheet">
+       <string notr="true">font: 600 14pt &quot;Segoe UI Variable Small Semibol&quot;;
+background-color: rgb(112, 105, 127);
+border-radius: 20px;
+color: white
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_X_max">
+      <property name="styleSheet">
+       <string notr="true">font: 600 14pt &quot;Segoe UI Variable Small Semibol&quot;;
+background-color: rgb(112, 105, 127);
+border-radius: 20px;
+color: white
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
