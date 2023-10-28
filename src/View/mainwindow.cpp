@@ -93,7 +93,7 @@ MainWindow::MainWindow(s21::Controller *controller_, QWidget *parent)
 
 MainWindow::~MainWindow() {
   delete ui;
-  delete win_graph;
+  //delete win_graph;
 }
 
 void MainWindow::digit_buttom_numbers() {
