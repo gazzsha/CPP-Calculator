@@ -1,25 +1,28 @@
+CXX = g++
+version = -std=c++17
 TESTS = ./Testing/
 SRC_MODEL_PATH = ./Model/
 SRC_MODEL = $(wildcard $(SRC_MODEL_PATH)*.cc)
 SRC_CONTROLLER_PATH = ./Controller/
 SRC_CONTROLLER = $(wildcard $(SRC_CONTROLLER_PATH)*.cc)
 SRC_TEST = $(wildcard $(TESTS)*cc)
-TARGET = test
+TARGET = tests
 REPORT = gcov_report
-CXXFLAGS = -Wall -Wextra -Werror -Wpedantic
+CXXFLAGS = -Wall -Wextra -Werror -Wpedantic -g
 SANITIZE = -fsanitize=address -g
 UNAME := $(shell uname)
 GCOV_FLAGS = -fprofile-arcs -ftest-coverage -lgcov 
 
 ifeq ($(UNAME), Linux)
- TEST_FLAGS += -lgtest -lgtest_main -pthread -lm
+ TEST_FLAGS +=  -lgtest -pthread -lm
 else
  TEST_FLAGS += -lgtest -lm
 endif
 
+all: uninstall clean $(TARGET) install dvi dist
 
 $(TARGET) : $(SRC) $(SRC_TEST)
-	$(CXX) $(CXXFLAGS) $(SRC_TEST) $(SRC_MODEL) $(SRC_CONTROLLER) $(TEST_FLAGS) -o $(TARGET)
+	$(CXX) $(version) $(CXXFLAGS) $(SRC_TEST) $(SRC_MODEL) $(SRC_CONTROLLER) $(TEST_FLAGS) -o $(TARGET)
 	./$(TARGET)
 
 
@@ -30,17 +33,19 @@ install: clean
 	cd build&&rm -rf *.*&&rm -rf Makefile&&rm -rf .qmake.stash
 	rm -rf uninstall/QtWidgets.pro.user
 	chmod 777 QtWidgets.app/
+	open QtWidgets.app/
 
 uninstall:
 	rm -rf build
+	rm -rf QtWidgets.app
 
 dist: install
-	tar --totals -cvf smart_calc.tar QtWidgets TESTS
+	tar --totals -cvf smart_calc.tar View Testing Model Controller
 
 
 dvi:
-	Doxygen .
-	open /html/index.html
+	Doxygen Doxyfile
+	open ./Documentation/html/index.html
 
 
 $(REPORT) : $(SRC) $(SRC_TEST) build_file
@@ -58,6 +63,7 @@ style:
 	clang-format -i  ./Testing/*h ./Testing/*cc  ./Model/*h ./Model/*cc ./Controller/*h ./Controller/*cc
 clean : 
 	rm -rf Build $(TARGET) *.a  ./html_report/ gcov_report *.gcno *.gcda *.info *.out *.tar  build-QtWidgets-Desktop_x86_darwin_generic_mach_o_64bit-Debug QtWidgets.app
-	cd QtWidgets; rm -rf *.a *.so *.out *.o report *.gc* *.info *.txt *.cmake test *.gch *.pdf *.tar  
 	rm -rf  *.html *.css test.info test.dSYM report
-	rm -rf QtWidgets/html
+	rm -rf Documentation
+	rm -rf $(SRC_MODEL_PATH)/*.out $(SRC_MODEL_PATH)/*.dSYM $(TESTS)/*.dSYM 
+	rm -rf *.dSYM 

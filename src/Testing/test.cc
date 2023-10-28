@@ -153,4 +153,10 @@ TEST(CalcTest, Test18) {
   s21::Controller controller(&model);
   EXPECT_ANY_THROW(controller.differentiatedPayment("10", "1000000", "-10.4"));
 }
+
 }  // namespace TEST
+
+int main() {
+  testing::InitGoogleTest();
+  return RUN_ALL_TESTS();
+}

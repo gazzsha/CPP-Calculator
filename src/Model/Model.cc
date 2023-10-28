@@ -100,7 +100,7 @@ void graphModel::set_Ymax(const double &d) noexcept { yMax = d; }
 void graphModel::set_Ymin(const double &d) noexcept { yMin = d; }
 
 void graphModel::set_nameFunction(const char *str) noexcept {
-  nameFunction = std::move(std::string(str));
+  nameFunction = std::string(str);
 }
 
 double graphModel::get_Xmax() const noexcept { return xMax; }
