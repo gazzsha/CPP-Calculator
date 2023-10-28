@@ -743,7 +743,7 @@ void Model::RMN(const char* str, const char* x) noexcept {
  double Validator::ValidDataCredit(const char *monthString, const char *loanAmounString,
                        const char *interestRateString) const noexcept {
     double month = strtod(monthString, NULL);
-    if ((month - (int)month) > 1e-6 && month < 1) return 0;
+    if ((month - (int)month) > 1e-6 || month < 1) return 0;
     double loanAmount = strtod(loanAmounString, NULL);
     if (loanAmount < 0) return 0;
     double interestRate = strtod(interestRateString, NULL);

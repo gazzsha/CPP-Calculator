@@ -13,7 +13,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp \
-    ../Model/Model.cc
+    ../Model/Model.cc \
+    ../Controller/Controller.cc
 
 HEADERS += \
     ../Controller/Controller.h \
