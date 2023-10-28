@@ -26,7 +26,7 @@ $(TARGET) : $(SRC) $(SRC_TEST)
 install: clean
 	rm -rf build QtWidgets.app
 	mkdir build
-	cd build && qmake ../QtWidgets/QtWidgets.pro&&make&&mv QtWidgets.app ../QtWidgets.app
+	cd build && qmake ../View/QtWidgets.pro&&make&&mv QtWidgets.app ../QtWidgets.app
 	cd build&&rm -rf *.*&&rm -rf Makefile&&rm -rf .qmake.stash
 	rm -rf uninstall/QtWidgets.pro.user
 	chmod 777 QtWidgets.app/
@@ -54,8 +54,10 @@ $(REPORT) : $(SRC) $(SRC_TEST) build_file
 build_file:
 	mkdir Build
 
+style: 
+	clang-format -i  ./Testing/*h ./Testing/*cc  ./Model/*h ./Model/*cc ./Controller/*h ./Controller/*cc
 clean : 
-	rm -rf Build $(TARGET) *.a *.o $(TESTS).*o ./html_report/ gcov_report *.gcno *.gcda *.info *.out *.tar  build-QtWidgets-Desktop_x86_darwin_generic_mach_o_64bit-Debug QtWidgets.app
+	rm -rf Build $(TARGET) *.a  ./html_report/ gcov_report *.gcno *.gcda *.info *.out *.tar  build-QtWidgets-Desktop_x86_darwin_generic_mach_o_64bit-Debug QtWidgets.app
 	cd QtWidgets; rm -rf *.a *.so *.out *.o report *.gc* *.info *.txt *.cmake test *.gch *.pdf *.tar  
 	rm -rf  *.html *.css test.info test.dSYM report
 	rm -rf QtWidgets/html
