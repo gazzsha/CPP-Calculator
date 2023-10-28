@@ -92,6 +92,48 @@ bool Validator::isValidExpression(const char *str) const noexcept {
   return return_value;
 }
 
+void graphModel::set_Xmax(const double& d) noexcept {
+    xMax = d; 
+}
+
+void graphModel::set_Xmin(const double& d) noexcept {
+    xMin = d; 
+}
+
+void graphModel::set_Ymax(const double& d) noexcept {
+    yMax = d; 
+}
+
+void graphModel::set_Ymin(const double& d) noexcept {
+    yMin = d; 
+}
+
+void graphModel::set_nameFunction(const char* str) noexcept {
+    nameFunction = std::move(std::string(str));
+}
+
+double graphModel::get_Xmax() const noexcept { 
+    return xMax;
+}
+double graphModel::get_Xmin() const noexcept { 
+    return xMin;
+}
+
+double graphModel::get_Ymax() const noexcept { 
+    return yMax;
+}
+
+double graphModel::get_Ymin() const noexcept { 
+    return yMin;
+}
+double graphModel::get_step() const noexcept { 
+    return step;
+}
+std::string graphModel::get_nameFunction() const  noexcept {
+    return nameFunction;
+}
+
+
 Model::~Model() { 
  AllocTraits::deallocate(alloc,arrayOfMonthlyPayment,get_data_month());
 }
@@ -124,10 +166,14 @@ const double* Model::get_data_arrayOfMonthlyPayment_differentiatedPayment() cons
   return monthPayment;
 }
 
-void Model::calculate(const char * str, const char * x)  { 
+void Model::calculate(const char * str, const char * x)  {
+    
   isValid = isValidExpression(str); 
   if (isValid) { 
-    RMN(str,x);
+    std::string s(str);
+    char * strNew = s.data();
+    upgrade_str(strNew);
+    RMN(strNew,x);
     calculatingExpression();
   } else throw std::logic_error("Wrong expression!");
 }
@@ -168,86 +214,86 @@ void Validator::parcer(const std::string& expression) noexcept{
         switch (expression[i])
         {
         case '+': {
-        stackOfSymbols.push(symbol(0,1,PLUS));
+        stackOfSymbols.emplace(0,1,PLUS);
         break;
         }
         case '-': { 
-        stackOfSymbols.push(symbol(0,1,MINUS));
+        stackOfSymbols.emplace(0,1,MINUS);
         break;
         }
         case '*': {
-        stackOfSymbols.push(symbol(0,2,MUL));
+        stackOfSymbols.emplace(0,2,MUL);
         break;
         }
         case '/': {
-        stackOfSymbols.push(symbol(0,2,DIV));
+        stackOfSymbols.emplace(0,2,DIV);
         break;
         }
         case 'm': { 
-        stackOfSymbols.push(symbol(0,2,MOD));
+        stackOfSymbols.emplace(0,2,MOD);
         i += 2 ;
         break;
         }
         case '^': {
-        stackOfSymbols.push(symbol(0,4,DEGREE));
+        stackOfSymbols.emplace(0,4,DEGREE);
         break;
         }
         case 'c': { 
-        stackOfSymbols.push(symbol(0,3,COS));
+        stackOfSymbols.emplace(0,3,COS);
             i += 2;
             break;
         }
         case 't': { 
-        stackOfSymbols.push(symbol(0,3,TAN));
+        stackOfSymbols.emplace(0,3,TAN);
 
             i += 2;
             break;
         }
         case 's': {
         if (expression[i + 1] == 'i') {
-        stackOfSymbols.push(symbol(0,3,SIN));
+        stackOfSymbols.emplace(0,3,SIN);
           i += 2;
         } else {
-        stackOfSymbols.push(symbol(0,4,SQRT));
+        stackOfSymbols.emplace(0,4,SQRT);
           i += 3;
         }
         break;
       }
       case 'l': {
         if (expression[i + 1] == 'n') {
-        stackOfSymbols.push(symbol(0,3,LN));
+        stackOfSymbols.emplace(0,3,LN);
           i += 1;
         } else {
-        stackOfSymbols.push(symbol(0,3,LOG));
+        stackOfSymbols.emplace(0,3,LOG);
           i += 2;
         }
         break;
       }
       case 'a': {
         if (expression[i + 1] == 'c') {
-        stackOfSymbols.push(symbol(0,3,ACOS));
+        stackOfSymbols.emplace(0,3,ACOS);
         } else if (expression[i + 1] == 's') {
-        stackOfSymbols.push(symbol(0,3,ASIN));
+        stackOfSymbols.emplace(0,3,ASIN);
         } else {
-        stackOfSymbols.push(symbol(0,3,ATAN));
+        stackOfSymbols.emplace(0,3,ATAN);
         }
         i += 3;
         break;
       }
       case '(': {
-        stackOfSymbols.push(symbol(0,5,LEFT_BRACKET));       
+        stackOfSymbols.emplace(0,5,LEFT_BRACKET);       
         break;
       }
       case ')': {
-        stackOfSymbols.push(symbol(0,5,RIGHT_BRACKET));       
+        stackOfSymbols.emplace(0,5,RIGHT_BRACKET);       
         break;
       }
       case '<': {
-        stackOfSymbols.push(symbol(0,1,UNARY_MINUS));       
+        stackOfSymbols.emplace(0,1,UNARY_MINUS);       
         break;
       }
       case '>': {
-        stackOfSymbols.push(symbol(0,1,UNARY_PLUS));       
+        stackOfSymbols.emplace(0,1,UNARY_PLUS);       
         break;
       }
       default: {
@@ -260,9 +306,9 @@ void Validator::parcer(const std::string& expression) noexcept{
             i++;
           }
           i -= 1;
-        stackOfSymbols.push(symbol(std::atof(number),0,NUMBER));       
+        stackOfSymbols.emplace(std::atof(number),0,NUMBER);       
         } else {
-        stackOfSymbols.push(symbol(1,0,X));         
+        stackOfSymbols.emplace(1,0,X);         
         }
         break;
       }
@@ -474,10 +520,12 @@ void Validator::validDot(bool& return_value, const size_t& i, const char *str) c
 }
 
 void Validator::validX(bool& return_value, const char *str, const int& i) const noexcept {
-  if (isNumberChar(str[i - 1])  ||
+    if (i != 0) {
+     if (isNumberChar(str[i - 1])  ||
       isNumberChar(str[i + 1])  || str[i + 1] == '.' ||
       str[i - 1] == '.' || str[i + 1] == 'x' || str[i + 1] == 'X')
     return_value = false;
+    }
 }
 bool   Validator::isNumberChar(const char& c) const noexcept {
   int return_value = false;
@@ -730,6 +778,8 @@ void Model::differentiatedPayment(const char *monthString,
       double interestRateTemp = strtod(interestRateString, NULL);
     double paymentMainBody = loanAmountTemp/ monthPayment;
     double mainLeft = loanAmountTemp;
+    overpaymentLoan = 0;
+    totalPayout = 0;
     arrayOfMonthlyPayment = AllocTraits::allocate(alloc,monthPayment);
     for (auto i = 0; i < (int)monthPayment; ++i) {
       AllocTraits::construct(alloc,arrayOfMonthlyPayment + i,mainLeft * interestRateTemp / (100.f * 12.f));
@@ -739,4 +789,24 @@ void Model::differentiatedPayment(const char *monthString,
     totalPayout = loanAmountTemp + overpaymentLoan;
     } else throw std::logic_error("Wrong input!");
 }
+
+void Model::insertData() {
+     xValueFunction.clear();
+     yValueFunction.clear();
+     std::string function = get_nameFunction();
+    for (auto value = get_Xmin(); value < get_Xmax(); value += get_step()) { 
+        xValueFunction.push_back(value);
+        calculate(function.c_str(),std::to_string(value).c_str());
+        yValueFunction.push_back(get_data());
+    }
+}
+
+std::vector<double> Model::get_xValueFunction() const { 
+    return xValueFunction;
+}
+
+std::vector<double> Model::get_yValueFunction() const { 
+    return yValueFunction;
+}
+
 }

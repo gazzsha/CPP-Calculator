@@ -9,7 +9,7 @@
 #include <cmath>
 #include <exception>
 #include <memory>
-
+#include <vector>
 namespace s21 {
 
 typedef enum { 
@@ -101,12 +101,32 @@ class Validator {
    bool  isAtan(const char *str) const noexcept;
 };
 
+class graphModel { 
+public:
+  void set_Xmax(const double&) noexcept;
+  void set_Xmin(const double&) noexcept;
+  void set_Ymin(const double&) noexcept;
+  void set_Ymax(const double&) noexcept;
+  void set_nameFunction(const char*) noexcept;
+  std::string get_nameFunction() const noexcept;
+  double get_Xmax() const noexcept;
+  double get_Xmin() const noexcept;
+  double get_Ymin() const noexcept;
+  double get_Ymax() const noexcept;
+  double get_step() const noexcept;
+  private:
+   double step = 0.1;
+    double xMin,xMax,yMin,yMax;
+    std::string nameFunction;
+};
 
-class Model: public Validator { 
+class Model: public Validator, public graphModel { 
     public:
     Model() {}
     ~Model();
     double get_data() const noexcept;
+    std::vector<double> get_xValueFunction() const;
+    std::vector<double> get_yValueFunction() const ;
     bool get_valid() const noexcept;
     double get_data_annuityRatio() const noexcept;
     double get_data_overpaymentLoan() const noexcept;
@@ -119,6 +139,7 @@ class Model: public Validator {
     void differentiatedPayment(const char *monthString,
                            const char *loanAmounString,
                            const char *interestRateString);
+    void insertData(); 
     private:
       using Alloc = std::allocator<double>;
       using AllocTraits = std::allocator_traits<Alloc>; 
@@ -129,6 +150,7 @@ class Model: public Validator {
       double totalPayout = 0.0f;
       double * arrayOfMonthlyPayment = nullptr;
       double monthPayment = 0.0f;
+      std::vector<double> xValueFunction,yValueFunction;
       Alloc alloc;
       void reverseStack() noexcept;
       void RMN(const char* str, const char* x) noexcept;

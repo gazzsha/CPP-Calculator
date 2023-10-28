@@ -17,18 +17,11 @@ class Graph_Windows : public QDialog
 public:
     explicit Graph_Windows(s21::Controller * controller_, QWidget *parent = nullptr);
     ~Graph_Windows();
-    double xBegin,xEnd,h,X;
-     QVector<double> x,y;
-    double x_min,x_max,y_min,y_max;
-     int flag_change;
-    QString name_function;
-
-
+        void print();
+  //   int flag_change;
 private:
-    Ui::Graph_Windows *ui;
     s21::Controller * controller;
-    void print();
-      void change_data();
+    Ui::Graph_Windows *ui;
 
 private slots:
     void on_pushButton_clicked();

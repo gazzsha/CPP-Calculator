@@ -33,7 +33,7 @@ private slots:
     void set_dot();
     void on_action_2_triggered();
     void on_action_3_triggered();
- //   void get_sum_of_month();
+  void get_sum_of_month();
     void on_pushButton_graph_clicked();
 };
 #endif // MAINWINDOW_H
